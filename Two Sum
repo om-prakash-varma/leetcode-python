@@ -1,0 +1,66 @@
+#linke: https://leetcode.com/problems/two-sum?envType=problem-list-v2&envId=v1e5lgb3
+
+''' 
+Question / Problem.
+Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+You can return the answer in any order.
+
+Example 1:
+Input: nums = [2,7,11,15], target = 9
+Output: [0,1]
+Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
+
+Example 2:
+Input: nums = [3,2,4], target = 6
+Output: [1,2]
+
+Example 3:
+Input: nums = [3,3], target = 6
+Output: [0,1]
+'''
+class Solution(object):
+    def twoSum(self, nums, target):
+        seen = {}
+
+        for i, num in enumerate(nums):
+            if target - num in seen:
+                return [seen[target - num], i]
+            seen[num] = i
+
+'''
+Approach:
+---------
+We use a dictionary (hash map) called 'seen' to store numbers we have
+already visited along with their indices.
+
+For each number in the array:
+1. Calculate the number needed to reach the target.
+      needed = target - current_number
+
+2. Check if 'needed' already exists in the dictionary.
+   - If yes, we have found the two numbers whose sum equals the target.
+     Return the index of the needed number and the current index.
+   - If no, store the current number and its index in the dictionary.
+
+Example:
+---------
+nums = [2, 7, 11, 15], target = 9
+
+i = 0, num = 2
+needed = 7
+7 not in seen -> store {2: 0}
+
+i = 1, num = 7
+needed = 2
+2 is in seen -> return [0, 1]
+
+Why this works:
+---------------
+Instead of checking every pair of numbers (which is slow),
+we remember previously seen numbers in a dictionary, allowing
+us to find the required pair in constant time.
+
+Time Complexity: O(n)
+Space Complexity: O(n)
+'''
